@@ -1,0 +1,367 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ExoPlanet.NET"
+    xmlns:oxy="http://oxyplot.org/wpf"
+    x:Class="ExoPlanet.NET.MainWindow"
+    mc:Ignorable="d"
+    Title="ExoPlanet.NET"
+    Height="853"
+    Width="1186"
+    Background="#050A12"
+    Foreground="#E8F7FF" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+
+    <Grid Loaded="Grid_Loaded" Background="#FF07111C">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="217*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- NASA HEADER -->
+        <Border Grid.Row="0" Grid.ColumnSpan="3"
+                Background="#FF07111C"
+                BorderBrush="#18394B"
+                BorderThickness="0,0,0,1" Margin="0,0,4,0">
+
+            <Grid Margin="20,0">
+                <!-- LEFT LOGO -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,-33,0">
+                    <Grid Width="42" Height="42" Margin="0,0,12,0">
+                        <Ellipse Fill="#081C29" Stroke="#39C4ED" StrokeThickness="1"/>
+                        <Ellipse Width="27" Height="27" Fill="#12384B" Stroke="#65D9FA" StrokeThickness="1"/>
+                        <Ellipse Width="8" Height="8" Fill="#E2FAFF"/>
+                        <Ellipse Width="4" Height="4" Fill="#48C9F2"
+                                 HorizontalAlignment="Left" VerticalAlignment="Top"
+                                 Margin="10,9,0,0"/>
+                    </Grid>
+
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="EXOPLANET.NET" Foreground="#F0FAFF"
+                                   FontSize="18" FontWeight="Bold"/>
+                        <TextBlock Text="PLANETARY SCIENCE"
+                                   Foreground="#5A8799" FontSize="10"
+                                   FontWeight="SemiBold" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- CENTER -->
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <!-- RIGHT STATUS -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center">
+
+                    <StackPanel/>
+
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- LEFT LIST -->
+        <Border Grid.Row="1" Grid.Column="0"
+                Margin="10,10,10,10"
+                Background="#0A1420"
+                BorderBrush="#17384A"
+                BorderThickness="1"
+                CornerRadius="6">
+
+            <Grid Margin="14">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="55"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="38"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="TARGET CATALOG"
+                               Foreground="#48C9F2"
+                               FontSize="11" FontWeight="Bold"/>
+                    <TextBlock Text="CONFIRMED / CANDIDATE WORLDS"
+                               Foreground="#7898A8"
+                               FontSize="10" Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <ListBox Grid.Row="1"
+                         ItemsSource="{Binding Exoplanets}"
+                         SelectedItem="{Binding SelectedExoplanet}"
+                         DisplayMemberPath="Name"
+                         SelectionChanged="ListBox_SelectionChanged"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         Foreground="#BBD5E0" Margin="0,0,0,33" FontFamily="Verdana"/>
+
+                <Border Grid.Row="2"
+                        Background="#07101A"
+                        BorderBrush="#17384A"
+                        BorderThickness="1"
+                        CornerRadius="3" Margin="0,2,0,3">
+
+                    <TextBox x:Name="searchBox" TextWrapping="Wrap" Margin="3,3,3,3" Cursor="" Background="#FF0A1420" Foreground="#FF93D9FF" BorderBrush="{x:Null}" TextChanged="TextBox_TextChanged" FontSize="13" FontFamily="Verdana" MaxLength="64" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                </Border>
+                <Label Content="FILTER BY NAME" Margin="0,0,0,4" Grid.Row="1" VerticalAlignment="Bottom" Foreground="#FF93D9FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Verdana"/>
+
+            </Grid>
+        </Border>
+
+        <!-- RIGHT PANEL -->
+        <Grid Grid.Row="1" Grid.Column="1" Margin="0,10,6,10">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="192"/>
+                <RowDefinition Height="50.707"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- DETAILS -->
+            <Border Grid.Row="0"
+                    Background="#0A1420"
+                    BorderBrush="#17384A"
+                    BorderThickness="1"
+                    CornerRadius="6" Margin="0,0,0,4">
+
+                <Grid Margin="20">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="◉ SELECTED TARGET"
+                                   Foreground="#568A9D"
+                                   FontSize="11" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding SelectedExoplanet.Name}"
+                                   Foreground="#E8F7FF"
+                                   FontSize="24" FontWeight="Bold"
+                                   Margin="0,3,0,0"/>
+                    </StackPanel>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="156*"/>
+                            <ColumnDefinition Width="139*"/>
+                            <ColumnDefinition Width="173*"/>
+                            <ColumnDefinition Width="156*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,5,6,0">
+                            <TextBlock Text="RADIUS" Foreground="#5B8B9E" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding SelectedExoplanet.Radius}"
+                                       Foreground="#DDF6FF" FontSize="15"
+                                       FontWeight="SemiBold" Margin="0,8,0,3"/>
+                            <TextBlock Text="EARTH RADII" Foreground="#3F6B7D" FontSize="11"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="3,5,6,0">
+                            <TextBlock Text="MASS" Foreground="#5B8B9E" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding SelectedExoplanet.Mass}"
+                                       Foreground="#DDF6FF" FontSize="15"
+                                       FontWeight="SemiBold" Margin="0,8,0,3"/>
+                            <TextBlock Text="EARTH MASSES" Foreground="#3F6B7D" FontSize="11"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Margin="3,5,6,0">
+                            <TextBlock Text="EQUILIBRIUM TEMP." Foreground="#5B8B9E" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding SelectedExoplanet.EquilibriumTemperature}"
+                                       Foreground="#DDF6FF" FontSize="15"
+                                       FontWeight="SemiBold" Margin="0,8,0,3"/>
+                            <TextBlock Text="KELVIN" Foreground="#3F6B7D" FontSize="11"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="3" Margin="3,5,0,0">
+                            <TextBlock Text="STAR TEMP." Foreground="#5B8B9E" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding SelectedExoplanet.StarEffectiveTemperatureKelvin}"
+                                       Foreground="#DDF6FF" FontSize="15"
+                                       FontWeight="SemiBold" Margin="0,8,0,3"/>
+                            <TextBlock Text="KELVIN" Foreground="#3F6B7D" FontSize="11"/>
+                        </StackPanel>
+
+                    </Grid>
+
+                </Grid>
+            </Border>
+
+            <!-- GRAPHS -->
+            <Grid Grid.Row="2" Margin="0,8,0,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0"
+                        Background="#0A1420"
+                        BorderBrush="#17384A"
+                        BorderThickness="1"
+                        CornerRadius="6"
+                        Margin="0,0,0,4">
+
+                    <Grid>
+                        <Border Height="30" Background="#08131E"
+                                BorderBrush="#15384A" BorderThickness="0,0,0,1">
+                        </Border>
+
+                        <oxy:PlotView x:Name="plotViewControl2"
+                                      Margin="10,10,10,10"
+                                      Background="Transparent" Foreground="Black"/>
+                    </Grid>
+
+                </Border>
+
+                <Border Grid.Row="1"
+                        Background="#0A1420"
+                        BorderBrush="#17384A"
+                        BorderThickness="1"
+                        CornerRadius="6"
+                        Margin="0,4,0,0">
+
+                    <Grid>
+                        <Border Height="30" Background="#08131E"
+                                BorderBrush="#15384A" BorderThickness="0,0,0,1">
+                            <Grid Margin="12,0">
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Right">
+                                    <Ellipse Width="5" Height="5"
+                                             Fill="#48C9F2"
+                                             Margin="0,0,5,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <oxy:PlotView x:Name="plotViewControl"
+                                      Margin="10,10,10,10"
+                                      Background="Transparent" Foreground="Black"/>
+                    </Grid>
+
+                </Border>
+
+            </Grid>
+            <Label x:Name="HabitableZoneLabel" Content="◯ Habitable zone: no" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="1" VerticalAlignment="Center" FontSize="14" Width="177" FontFamily="Verdana" Height="27" Foreground="#FFE88104"/>
+            <Label x:Name="worldTypeLabel" Content="◯ World type classification: N/A" Margin="193,0,20,0" Grid.Row="1" VerticalAlignment="Center" FontSize="14" FontFamily="Verdana" Height="27" Foreground="#FFE88104"/>
+
+        </Grid>
+
+        <Border x:Name="loadingBarControl1"
+            Grid.Row="1"
+            Grid.Column="1"
+            Width="441"
+            Height="107"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Margin="0,0,23,29"
+            Background="#FF162738"
+            BorderBrush="#24546A"
+            BorderThickness="1"
+            CornerRadius="5"
+            Panel.ZIndex="100">
+
+            <Grid Margin="14">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="42"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" Width="30" Height="30" VerticalAlignment="Center">
+                    <Ellipse Stroke="#174A60" StrokeThickness="3"/>
+                    <Ellipse Margin="4" Stroke="#48C9F2" StrokeThickness="2" StrokeDashArray="2,3"/>
+                    <Ellipse Width="5" Height="5" Fill="#48C9F2"
+                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        x:Name="loadingLabelControl"
+                        Content="Loading exoplanet data"
+                        Foreground="#DDF6FF"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Padding="0"
+                        Margin="0"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"/>
+
+                    <ProgressBar
+                        Grid.Row="1"
+                        x:Name="loadingBarControl"
+                        Height="3"
+                        IsIndeterminate="True"
+                        Foreground="#48C9F2"
+                        Background="#17384A"
+                        BorderBrush="#17384A"
+                        BorderThickness="0"
+                        Orientation="Horizontal"
+                        SmallChange="0"
+                        LargeChange="0"
+                        Maximum="9.4"/>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Text="Receiving astronomical catalog data..."
+                        Foreground="#4E798B"
+                        VerticalAlignment="Center"/>
+
+                </Grid>
+
+            </Grid>
+        </Border>
+
+        <Grid x:Name="errorPanel"
+      Margin="25,297,22,0"
+      Grid.Row="1"
+      Grid.ColumnSpan="2"
+      Height="187"
+      VerticalAlignment="Top"
+      Visibility="Hidden">
+
+            <!-- Background rectangle -->
+            <Rectangle Fill="#FF162738" Stroke="#FF24546A" RadiusX="10" RadiusY="10"/>
+
+            <!-- Text content -->
+            <StackPanel Margin="0" VerticalAlignment="Center">
+
+                <Label Content="NETWORK ERROR"
+               FontSize="32"
+               FontWeight="Bold"
+               Foreground="#FF40678E"
+               HorizontalContentAlignment="Center"/>
+
+                <Label Content="HTTP error has occured: unable to download astronomical catalog data from the server."
+               Foreground="#FFDDF6FF"
+               FontSize="16"
+               HorizontalContentAlignment="Center"
+               Margin="0,10,0,0"/>
+
+                <Label Content="Please, check your internet connection and restart the application to continue."
+               Foreground="#FF9BBDC8"
+               FontSize="14"
+               HorizontalContentAlignment="Center"
+               Margin="0,5,0,0"/>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+
+</Window>
